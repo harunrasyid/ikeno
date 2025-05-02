@@ -43,7 +43,12 @@ export const DrawPage = () => {
       <VStack sx={styles.canvasContainer}>
         <canvas
           ref={canvasRef}
-          style={{ width: "100%", height: "100%", cursor: "crosshair" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            cursor: "crosshair",
+            touchAction: "none",
+          }}
         />
       </VStack>
 
