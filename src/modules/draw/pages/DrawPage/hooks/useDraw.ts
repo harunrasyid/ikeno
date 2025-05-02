@@ -4,7 +4,8 @@ export const useDraw = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isDrawing = useRef(false);
   const context = useRef<CanvasRenderingContext2D | null>(null);
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState<string>("#000000");
+  const [isCanvasEmpty, setIsCanvasEmpty] = useState<boolean>(true);
   const isInitialized = useRef(false);
 
   const getEventPosition = (e: MouseEvent | TouchEvent) => {
@@ -39,6 +40,7 @@ export const useDraw = () => {
         context.current.strokeStyle = color;
         context.current.lineTo(x, y);
         context.current.stroke();
+        setIsCanvasEmpty(false);
       }
     },
     [color],
@@ -58,6 +60,7 @@ export const useDraw = () => {
     const canvas = canvasRef.current;
     if (canvas && context.current) {
       context.current.clearRect(0, 0, canvas.width, canvas.height);
+      setIsCanvasEmpty(true);
     }
   }, []);
 
@@ -122,5 +125,6 @@ export const useDraw = () => {
     clearCanvas,
     color,
     setColor,
+    isCanvasEmpty,
   };
 };
