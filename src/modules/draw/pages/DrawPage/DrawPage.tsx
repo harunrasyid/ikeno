@@ -1,18 +1,29 @@
+import { useNavigate } from "react-router";
 import { Button, HStack, Input, Spacer, Text, VStack } from "@chakra-ui/react";
+import { dataURLtoBlob } from "@/utils";
 import { styles } from "./DrawPage.style";
-import { useDraw } from "./hooks";
+import { useDraw, useUpload } from "./hooks";
 
 export const DrawPage = () => {
-  const { canvasRef, exportImage, color, setColor, clearCanvas } = useDraw();
+  const {
+    canvasRef,
+    exportImage,
+    color,
+    setColor,
+    clearCanvas,
+    isCanvasEmpty,
+  } = useDraw();
+  const { upload } = useUpload();
+  const navigate = useNavigate();
 
-  const handleExport = () => {
-    const image = exportImage();
-    if (image) {
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = "koi_drawing.png";
-      link.click();
-    }
+  const handleExport = async () => {
+    const dataUrl = exportImage();
+    if (!dataUrl) return;
+
+    const blob = dataURLtoBlob(dataUrl);
+    await upload(blob);
+    clearCanvas();
+    navigate(`/pond`);
   };
 
   return (
@@ -54,7 +65,11 @@ export const DrawPage = () => {
 
       {/* Submit Button */}
       <VStack sx={styles.buttonContainer}>
-        <Button sx={styles.button} onClick={handleExport}>
+        <Button
+          sx={styles.button}
+          disabled={isCanvasEmpty}
+          onClick={handleExport}
+        >
           Release to Pond
         </Button>
       </VStack>
