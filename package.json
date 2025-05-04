@@ -13,12 +13,18 @@
     "@chakra-ui/react": "^2.10.7",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@react-three/drei": "^10.0.7",
+    "@react-three/fiber": "^9.1.2",
+    "@types/three": "^0.176.0",
     "firebase": "^11.6.1",
     "framer-motion": "^12.9.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.5.2",
-    "react-router-dom": "^7.5.2"
+    "react-router-dom": "^7.5.2",
+    "three": "^0.176.0",
+    "three-stdlib": "^2.36.0",
+    "wiggle": "^0.0.17"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
