@@ -4,4 +4,5 @@ export interface IBoidProps {
   position: Vector3;
   model: string;
   animation: string;
+  textureUrl: string;
 }
