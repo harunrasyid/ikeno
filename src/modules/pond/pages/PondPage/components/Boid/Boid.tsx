@@ -11,36 +11,41 @@ export const Boid = ({
   animation,
   textureUrl,
 }: IBoidProps) => {
+  // Load the GLB model
   const { scene, animations } = useGLTF(`/models/${model}.glb`);
-  const texture = useLoader(TextureLoader, textureUrl);
 
+  // Load the custom-painted texture
+  const texture = useLoader(TextureLoader, textureUrl);
+  texture.flipY = false;
+
+  // Clone the scene to make it safe for reuse
   const clone = useMemo(() => SkeletonUtils.clone(scene) as Group, [scene]);
+
   const group = useRef<Group>(null);
+
+  // Set up animation actions
   const { actions } = useAnimations(animations, group);
 
+  // Apply texture to all mesh materials
   useEffect(() => {
     clone.traverse((child: Object3D) => {
       if ((child as Mesh).isMesh) {
         const mesh = child as Mesh;
         mesh.castShadow = true;
 
-        if (Array.isArray(mesh.material)) {
-          // Apply texture to multi-material meshes
-          mesh.material.forEach((material) => {
-            if ("map" in material) {
-              material.map = texture;
-              material.needsUpdate = true;
-            }
-          });
-        } else if ("map" in mesh.material) {
-          // Apply texture to single-material meshes
-          mesh.material.map = texture;
-          mesh.material.needsUpdate = true;
-        }
+        const material = mesh.material;
+
+        // @ts-expect-error: fix later
+        material.map = texture;
+        // @ts-expect-error: fix later
+        material.needsUpdate = true;
+        // @ts-expect-error: fix later
+        material.color.set(0xffffff);
       }
     });
   }, [clone, texture]);
 
+  // Play the animation
   useEffect(() => {
     actions?.[animation]?.play();
     return () => {

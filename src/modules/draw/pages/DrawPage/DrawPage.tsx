@@ -1,6 +1,15 @@
 import { useNavigate } from "react-router";
-import { Button, HStack, Input, Spacer, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Image,
+  Input,
+  Spacer,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { dataURLtoBlob } from "@/utils";
+import { images } from "@/assets/images";
 import { styles } from "./DrawPage.style";
 import { useDraw, useUpload } from "./hooks";
 
@@ -55,12 +64,14 @@ export const DrawPage = () => {
         <canvas
           ref={canvasRef}
           style={{
-            width: "100%",
-            height: "100%",
+            width: "1024px",
+            height: "1024px",
             cursor: "crosshair",
             touchAction: "none",
+            zIndex: 5,
           }}
-        />
+        ></canvas>
+        <Image src={images.guideline} sx={styles.guideline} />
       </VStack>
 
       {/* Submit Button */}
