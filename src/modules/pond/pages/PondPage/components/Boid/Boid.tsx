@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { SkeletonUtils } from "three-stdlib";
 import { Group, Mesh, Object3D, TextureLoader } from "three";
-import { useLoader } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { IBoidProps } from "./Boid.props";
 
@@ -10,6 +10,8 @@ export const Boid = ({
   model,
   animation,
   textureUrl,
+  velocity,
+  ...rest
 }: IBoidProps) => {
   // Load the GLB model
   const { scene, animations } = useGLTF(`/models/${model}.glb`);
@@ -54,8 +56,18 @@ export const Boid = ({
     };
   }, [animation, actions]);
 
+  useFrame(() => {
+    if (group.current) {
+      const target = group.current.clone(false);
+      target.lookAt(group.current.position.clone().add(velocity));
+      group.current.quaternion.slerp(target.quaternion, 0.1);
+
+      group.current.position.copy(position);
+    }
+  });
+
   return (
-    <group ref={group} position={position}>
+    <group {...rest} ref={group} position={position}>
       <primitive object={clone} rotation-y={Math.PI / 2} />
     </group>
   );
