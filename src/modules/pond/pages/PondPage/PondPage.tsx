@@ -15,6 +15,8 @@ import { useBoundary } from "./hooks";
 export const PondPage = () => {
   const { responsiveBoundary } = useBoundary();
 
+  const isShowBoundary: boolean = false;
+
   return (
     <VStack sx={styles.page}>
       {/* Loader */}
@@ -38,25 +40,27 @@ export const PondPage = () => {
           <OrbitControls />
 
           {/* Boids */}
-          <Boids />
+          <Boids boundary={responsiveBoundary} />
 
           {/* Boundary */}
           {/* TODO: remove after testing */}
-          <mesh>
-            <boxGeometry
-              args={[
-                responsiveBoundary.x,
-                responsiveBoundary.y,
-                responsiveBoundary.z,
-              ]}
-            />
-            <meshStandardMaterial
-              color={"orange"}
-              transparent={true}
-              opacity={0.5}
-              side={DoubleSide}
-            />
-          </mesh>
+          {isShowBoundary ? (
+            <mesh>
+              <boxGeometry
+                args={[
+                  responsiveBoundary.x,
+                  responsiveBoundary.y,
+                  responsiveBoundary.z,
+                ]}
+              />
+              <meshStandardMaterial
+                color={"orange"}
+                transparent={true}
+                opacity={0.5}
+                side={DoubleSide}
+              />
+            </mesh>
+          ) : null}
 
           {/* Lighting */}
           <SoftShadows size={15} focus={1.5} samples={12} />
