@@ -1,9 +1,8 @@
 import { Vector3 } from "three";
 import { Boid } from "../Boid";
-import { IBoidsProps } from "./Boids.props.ts";
 import { useTexture } from "./hooks";
 
-export const Boids = ({ boundary }: IBoidsProps) => {
+export const Boids = () => {
   const { textureUrls } = useTexture();
 
   if (textureUrls.length === 0) return <></>;
