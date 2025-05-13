@@ -5,4 +5,7 @@ export interface IBoidProps {
   model: string;
   animation: string;
   textureUrl: string;
+  velocity: Vector3;
+  wander: number;
+  scale: number;
 }
