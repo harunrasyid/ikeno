@@ -38,7 +38,7 @@ export const PondPage = () => {
           <OrbitControls />
 
           {/* Boids */}
-          <Boids boundary={responsiveBoundary} />
+          <Boids />
 
           {/* Boundary */}
           {/* TODO: remove after testing */}
