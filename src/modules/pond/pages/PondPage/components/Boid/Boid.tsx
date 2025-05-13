@@ -33,14 +33,15 @@ export const Boid = ({
         const mesh = child as Mesh;
         mesh.castShadow = true;
 
-        const material = mesh.material;
+        // @ts-expect-error: dynamically added texture
+        mesh.material = mesh.material.clone();
 
-        // @ts-expect-error: fix later
-        material.map = texture;
-        // @ts-expect-error: fix later
-        material.needsUpdate = true;
-        // @ts-expect-error: fix later
-        material.color.set(0xffffff);
+        // @ts-expect-error: dynamically added texture
+        mesh.material.map = texture;
+        // @ts-expect-error: to apply the new texture
+        mesh.material.needsUpdate = true;
+        // @ts-expect-error: set to white so texture shows as-is
+        mesh.material.color.set(0xffffff);
       }
     });
   }, [clone, texture]);
