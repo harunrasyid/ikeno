@@ -2,7 +2,7 @@ import { SystemStyleObject } from "@chakra-ui/react";
 
 const styles: { [key: string]: SystemStyleObject } = {
   page: {
-    // height: "100vh",
+    height: "100vh",
     width: "100vw",
     padding: "24px",
     gap: "24px",
@@ -96,8 +96,9 @@ const styles: { [key: string]: SystemStyleObject } = {
 
   guideline: {
     position: "absolute",
-    width: "1024px",
-    height: "1024px",
+    height: "100%",
+    aspectRatio: 1,
+    border: "3px solid red",
   },
 };
 

@@ -1,8 +1,10 @@
 import { useRef, useEffect, useCallback, useState } from "react";
+import { images } from "@/assets/images";
 
 export const useDraw = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isDrawing = useRef(false);
+  const backgroundImage = useRef<HTMLImageElement | null>(null);
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const [color, setColor] = useState<string>("#000000");
   const [isCanvasEmpty, setIsCanvasEmpty] = useState<boolean>(true);
@@ -52,8 +54,29 @@ export const useDraw = () => {
   }, []);
 
   const exportImage = useCallback(() => {
-    const canvas = canvasRef.current;
-    return canvas?.toDataURL("image/png");
+    const sourceCanvas = canvasRef.current;
+    if (!sourceCanvas) return null;
+
+    const exportCanvas = document.createElement("canvas");
+    exportCanvas.width = 1024;
+    exportCanvas.height = 1024;
+
+    const exportCtx = exportCanvas.getContext("2d");
+    if (!exportCtx) return null;
+
+    exportCtx.drawImage(
+      sourceCanvas,
+      0,
+      0,
+      sourceCanvas.width,
+      sourceCanvas.height,
+      0,
+      0,
+      1024,
+      1024,
+    );
+
+    return exportCanvas.toDataURL("image/png");
   }, []);
 
   const clearCanvas = useCallback(() => {
@@ -63,6 +86,16 @@ export const useDraw = () => {
       setIsCanvasEmpty(true);
     }
   }, []);
+
+  const drawBackground = () => {
+    const canvas = canvasRef.current;
+    const ctx = context.current;
+    const img = backgroundImage.current;
+    if (!canvas || !ctx || !img) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -118,6 +151,43 @@ export const useDraw = () => {
       window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [color, draw, startDrawing, endDrawing]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    const resizeCanvas = () => {
+      const parent = canvas?.parentElement;
+
+      if (!parent) return;
+
+      // Calculate the smaller of the parent's width/height to maintain 1:1
+      const size = Math.min(parent.clientWidth, parent.clientHeight);
+
+      // Set canvas display size (CSS)
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+
+      // Set canvas internal size (resolution)
+      canvas.width = size;
+      canvas.height = size;
+
+      drawBackground();
+    };
+
+    resizeCanvas(); // Initial resize
+    window.addEventListener("resize", resizeCanvas);
+
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, []);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = images.guideline;
+    img.onload = () => {
+      backgroundImage.current = img;
+      drawBackground(); // once image loads
+    };
+  }, []);
 
   return {
     canvasRef,
