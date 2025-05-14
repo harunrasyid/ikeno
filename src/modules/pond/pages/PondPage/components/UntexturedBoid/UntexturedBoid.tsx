@@ -1,21 +1,20 @@
+import { useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
-import { IBoidProps } from "./Boid.props";
-import { useTexture } from "./hooks";
+import { SkeletonUtils } from "three-stdlib";
 import { useAnimation } from "../../hooks";
+import { IUntexturedBoidProps } from "./UntexturedBoid.props";
 
-export const Boid = ({
+export const UntexturedBoid = ({
   position,
   model,
   animation,
-  textureUrl,
   velocity,
   ...rest
-}: IBoidProps) => {
+}: IUntexturedBoidProps) => {
   // Load the GLB model
   const { scene, animations } = useGLTF(`/models/${model}.glb`);
 
-  // Texture overlay hooks
-  const { clone } = useTexture(scene, textureUrl);
+  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
 
   // Animation overlay hooks
   const { group } = useAnimation(animations, animation, velocity, position);
