@@ -34,7 +34,7 @@ export const PondPage = () => {
       <Canvas
         style={{ position: "absolute", inset: 0, zIndex: 1 }}
         shadows
-        camera={{ position: [0, 0, 18], fov: 50 }}
+        camera={{ position: [0, 0, 12], fov: 50 }}
       >
         <Suspense fallback={null}>
           <OrbitControls />

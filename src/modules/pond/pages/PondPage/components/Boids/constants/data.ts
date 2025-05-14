@@ -1,0 +1,25 @@
+export const WANDER_SETTINGS = {
+  WANDER_RADIUS: 6,
+  WANDER_STRENGTH: 2,
+};
+
+export const ALIGNMENT_SETTINGS = {
+  ALIGN_RADIUS: 1.2,
+  ALIGN_STRENGTH: 1,
+};
+
+export const AVOID_SETTINGS = {
+  AVOID_RADIUS: 0.8,
+  AVOID_STRENGTH: 2,
+};
+
+export const COHESION_SETTINGS = {
+  COHESION_RADIUS: 1.22,
+  COHESION_STRENGTH: 4,
+};
+
+export const RULES = {
+  ALIGNMENT: true,
+  AVOIDANCE: true,
+  COHESION: true,
+};
