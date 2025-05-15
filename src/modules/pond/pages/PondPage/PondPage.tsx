@@ -10,7 +10,7 @@ import {
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { styles } from "./PondPage.style";
-import { Boids } from "./components";
+import { Boids, Bubbles } from "./components";
 import { useBoundary } from "./hooks";
 
 export const PondPage = () => {
@@ -55,6 +55,8 @@ export const PondPage = () => {
 
           {/* Boids */}
           <Boids boundary={responsiveBoundary} />
+
+          <Bubbles />
 
           {/* Boundary */}
           {/* TODO: remove after testing */}
