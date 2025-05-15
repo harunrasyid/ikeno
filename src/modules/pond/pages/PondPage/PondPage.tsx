@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { DoubleSide } from "three";
-import { Box, VStack } from "@chakra-ui/react";
+import { useNavigate } from "react-router";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import {
   Environment,
   Loader,
@@ -13,7 +14,11 @@ import { Boids } from "./components";
 import { useBoundary } from "./hooks";
 
 export const PondPage = () => {
+  // Boundary hooks
   const { responsiveBoundary } = useBoundary();
+
+  // Navigation hooks
+  const navigate = useNavigate();
 
   const isShowBoundary: boolean = false;
 
@@ -29,6 +34,15 @@ export const PondPage = () => {
         bgGradient="linear(to-b, teal.400, blue.400)"
         zIndex={0}
       />
+
+      <Button
+        position={"absolute"}
+        zIndex={2}
+        onClick={() => navigate("/draw")}
+        sx={styles.button}
+      >
+        Draw Your Fish!
+      </Button>
 
       {/* R3F Canvas */}
       <Canvas
