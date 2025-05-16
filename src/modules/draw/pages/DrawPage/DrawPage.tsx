@@ -3,6 +3,7 @@ import { Button, HStack, Input, Spacer, Text, VStack } from "@chakra-ui/react";
 import { dataURLtoBlob } from "@/utils";
 import { styles } from "./DrawPage.style";
 import { useDraw, useUpload } from "./hooks";
+import { LoadingOverlay } from "@/components";
 
 export const DrawPage = () => {
   const {
@@ -13,7 +14,7 @@ export const DrawPage = () => {
     clearCanvas,
     isCanvasEmpty,
   } = useDraw();
-  const { upload } = useUpload();
+  const { upload, isLoading } = useUpload();
   const navigate = useNavigate();
 
   const handleExport = async () => {
@@ -74,6 +75,9 @@ export const DrawPage = () => {
           Release to Pond
         </Button>
       </VStack>
+
+      {/* Loading  */}
+      <LoadingOverlay isLoading={isLoading} />
     </VStack>
   );
 };
