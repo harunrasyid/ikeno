@@ -3,7 +3,6 @@ import { Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 import { randomFloat, randomNum } from "@/utils";
 import { Boid, IBoidProps, UntexturedBoid, IUntexturedBoidProps } from "../";
-import { useTexture } from "./hooks";
 import { IBoidsProps } from "./Boids.props";
 import {
   ALIGNMENT_SETTINGS,
@@ -27,14 +26,12 @@ function remap(
   low1: number,
   high1: number,
   low2: number,
-  high2: number,
+  high2: number
 ) {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
 }
 
-export const Boids = ({ boundary }: IBoidsProps) => {
-  const { textureUrls } = useTexture();
-
+export const Boids = ({ boundary, textureUrls }: IBoidsProps) => {
   // Setting
   const BOIDS_SETTINGS = {
     NB_BOIDS: textureUrls.length,
@@ -50,7 +47,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
     const res: IBoidProps[] = [];
     const scaleData: number = randomFloat(
       BOIDS_SETTINGS.MIN_SCALE,
-      BOIDS_SETTINGS.MAX_SCALE,
+      BOIDS_SETTINGS.MAX_SCALE
     );
 
     textureUrls.map((url) => {
@@ -58,7 +55,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
         position: new Vector3(
           randomFloat(-boundary.x / 2, boundary.x / 2),
           randomFloat(-boundary.y / 2, boundary.y / 2),
-          randomFloat(-boundary.z / 2, boundary.z / 2),
+          randomFloat(-boundary.z / 2, boundary.z / 2)
         ),
         model: "Koi_01",
         animation: "Fish_Armature|Swimming_Fast",
@@ -84,7 +81,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
     const res: IUntexturedBoidProps[] = [];
     const scaleData: number = randomFloat(
       BOIDS_SETTINGS.MIN_SCALE,
-      BOIDS_SETTINGS.MAX_SCALE,
+      BOIDS_SETTINGS.MAX_SCALE
     );
 
     for (let i = 0; i < 10; i++) {
@@ -92,7 +89,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
         position: new Vector3(
           randomFloat(-boundary.x / 2, boundary.x / 2),
           randomFloat(-boundary.y / 2, boundary.y / 2),
-          randomFloat(-boundary.z / 2, boundary.z / 2),
+          randomFloat(-boundary.z / 2, boundary.z / 2)
         ),
         model: `Koi_0${randomNum(1, 8)}`,
         animation: "Fish_Armature|Swimming_Fast",
@@ -121,7 +118,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
       wander.set(
         Math.cos(boid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
         Math.sin(boid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
-        0,
+        0
       );
 
       wander.normalize();
@@ -130,7 +127,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
       horizontalWander.set(
         Math.cos(boid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
         0,
-        Math.sin(boid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
+        Math.sin(boid.wander) * WANDER_SETTINGS.WANDER_RADIUS
       );
 
       horizontalWander.normalize();
@@ -225,8 +222,8 @@ export const Boids = ({ boundary }: IBoidsProps) => {
           BOIDS_SETTINGS.MIN_SCALE,
           BOIDS_SETTINGS.MAX_SCALE,
           BOIDS_SETTINGS.MAX_SPEED,
-          BOIDS_SETTINGS.MIN_SPEED,
-        ) * delta,
+          BOIDS_SETTINGS.MIN_SPEED
+        ) * delta
       );
 
       // APPLY VELOCITY
@@ -242,7 +239,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
       wander.set(
         Math.cos(uBoid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
         Math.sin(uBoid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
-        0,
+        0
       );
 
       wander.normalize();
@@ -251,7 +248,7 @@ export const Boids = ({ boundary }: IBoidsProps) => {
       horizontalWander.set(
         Math.cos(uBoid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
         0,
-        Math.sin(uBoid.wander) * WANDER_SETTINGS.WANDER_RADIUS,
+        Math.sin(uBoid.wander) * WANDER_SETTINGS.WANDER_RADIUS
       );
 
       horizontalWander.normalize();
@@ -346,8 +343,8 @@ export const Boids = ({ boundary }: IBoidsProps) => {
           BOIDS_SETTINGS.MIN_SCALE,
           BOIDS_SETTINGS.MAX_SCALE,
           BOIDS_SETTINGS.MAX_SPEED,
-          BOIDS_SETTINGS.MIN_SPEED,
-        ) * delta,
+          BOIDS_SETTINGS.MIN_SPEED
+        ) * delta
       );
 
       // APPLY VELOCITY

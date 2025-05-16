@@ -21,5 +21,5 @@ export const COHESION_SETTINGS = {
 export const RULES = {
   ALIGNMENT: true,
   AVOIDANCE: true,
-  COHESION: true,
+  COHESION: false,
 };
