@@ -1,10 +1,14 @@
 import { signInAnonymously } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { auth, storage } from "@/firebase";
+import { useLoading } from "@/hooks";
 
 export function useUpload() {
+  const { isLoading, setLoading } = useLoading(false);
+
   const upload = async (blob: Blob) => {
     try {
+      setLoading(true);
       if (!auth.currentUser) {
         await signInAnonymously(auth);
       }
@@ -23,10 +27,13 @@ export function useUpload() {
     } catch (error) {
       console.error("Upload failed:", error);
       alert("Upload failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return {
     upload,
+    isLoading,
   };
 }

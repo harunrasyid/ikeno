@@ -9,9 +9,10 @@ import {
   SoftShadows,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { LoadingOverlay } from "@/components";
 import { styles } from "./PondPage.style";
 import { Boids, Bubbles } from "./components";
-import { useBoundary } from "./hooks";
+import { useBoundary, useTexture } from "./hooks";
 
 export const PondPage = () => {
   // Boundary hooks
@@ -19,6 +20,9 @@ export const PondPage = () => {
 
   // Navigation hooks
   const navigate = useNavigate();
+
+  // Texture urls hooks
+  const { textureUrls, isLoading } = useTexture();
 
   const isShowBoundary: boolean = false;
 
@@ -54,7 +58,7 @@ export const PondPage = () => {
           <OrbitControls />
 
           {/* Boids */}
-          <Boids boundary={responsiveBoundary} />
+          <Boids boundary={responsiveBoundary} textureUrls={textureUrls} />
 
           <Bubbles />
 
@@ -102,6 +106,8 @@ export const PondPage = () => {
           />
         </Suspense>
       </Canvas>
+
+      <LoadingOverlay isLoading={isLoading} />
     </VStack>
   );
 };
