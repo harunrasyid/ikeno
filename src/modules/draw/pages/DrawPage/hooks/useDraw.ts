@@ -45,7 +45,7 @@ export const useDraw = () => {
         setIsCanvasEmpty(false);
       }
     },
-    [color],
+    [color]
   );
 
   const endDrawing = useCallback(() => {
@@ -73,7 +73,7 @@ export const useDraw = () => {
       0,
       0,
       1024,
-      1024,
+      1024
     );
 
     return exportCanvas.toDataURL("image/png");
@@ -81,12 +81,13 @@ export const useDraw = () => {
 
   const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current;
-    if (canvas && context.current) {
-      context.current.clearRect(0, 0, canvas.width, canvas.height);
+    const ctx = context.current;
+    if (canvas && ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBackground();
       setIsCanvasEmpty(true);
     }
   }, []);
-
   const drawBackground = () => {
     const canvas = canvasRef.current;
     const ctx = context.current;
