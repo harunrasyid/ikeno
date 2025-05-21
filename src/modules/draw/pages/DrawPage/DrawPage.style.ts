@@ -21,8 +21,8 @@ const styles: { [key: string]: SystemStyleObject } = {
     fontSize: "xx-large",
   },
   color: {
-    width: "40px",
-    height: "40px",
+    maxWidth: "40px",
+    maxHeight: "40px",
     padding: "0",
     border: "none",
     borderRadius: "full",
@@ -32,6 +32,7 @@ const styles: { [key: string]: SystemStyleObject } = {
     MozAppearance: "none",
     overflow: "hidden",
     cursor: "pointer",
+    aspectRatio: 1,
     "&::-webkit-color-swatch-wrapper": {
       padding: 0,
     },
